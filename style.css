@@ -168,6 +168,12 @@ body {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.tile:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .tile video {
