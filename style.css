@@ -128,13 +128,6 @@ body {
   gap: 16px;
 }
 
-.tile-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 34px;
-}
-
 @media (max-width: 700px) {
   .tile-grid { grid-template-columns: repeat(2, 1fr); }
 }
