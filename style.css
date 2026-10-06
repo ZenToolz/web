@@ -8,6 +8,12 @@ body {
   min-height: 100vh;
 }
 
+#grid,
+#grid.tile-grid {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
 .page-heading {
   grid-column: 1 / -1;   /* span all 3 columns */
   font-size: 0.95rem;
