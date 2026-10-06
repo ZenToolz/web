@@ -9,6 +9,7 @@ body {
 }
 
 .page-heading {
+  grid-column: 1 / -1;   /* span all 3 columns */
   font-size: 0.95rem;
   font-weight: 600;
   color: #888;

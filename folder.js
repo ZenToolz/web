@@ -64,44 +64,44 @@ async function buildFolder() {
   const flat = [];
 
   sortedPages.forEach(p => {
-    const groupFiles = groups.get(p);
+  const groupFiles = groups.get(p);
 
-    // ---- heading ----
-    const heading = document.createElement("h2");
-    heading.className = "page-heading";
+  // ---- one grid that holds the heading + all tiles ----
+  const grid = document.createElement("div");
+  grid.className = "tile-grid";
 
-    if (p > 0) {
-      const pageIdx = realPages.indexOf(p) + 1; // 1-based
-      heading.textContent = `──── Page ${pageIdx} / ${totalPages} ────`;
-    } else {
-      heading.textContent = `──── Other ────`;
-    }
-    gridHost.appendChild(heading);
+  // heading (spans all columns)
+  const heading = document.createElement("h2");
+  heading.className = "page-heading";
+  if (p > 0) {
+    const pageIdx = realPages.indexOf(p) + 1;
+    heading.textContent = `──── Page ${pageIdx} / ${totalPages} ────`;
+  } else {
+    heading.textContent = `──── Other ────`;
+  }
+  grid.appendChild(heading);
 
-    // ---- 3-per-row grid for this group ----
-    const grid = document.createElement("div");
-    grid.className = "tile-grid";
+  // tiles
+  groupFiles.forEach(file => {
+    const idx = flat.length;
+    flat.push(file);
 
-    groupFiles.forEach(file => {
-      const idx = flat.length;
-      flat.push(file);
+    const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.appendChild(makeVideo(src));
 
-      const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
-      const tile = document.createElement("div");
-      tile.className = "tile";
-      tile.appendChild(makeVideo(src));
+    const cap = document.createElement("div");
+    cap.className = "caption";
+    cap.textContent = displayName(file);
+    tile.appendChild(cap);
 
-      const cap = document.createElement("div");
-      cap.className = "caption";
-      cap.textContent = displayName(file);
-      tile.appendChild(cap);
-
-      tile.addEventListener("click", () => openLightbox(flat, idx));
-      grid.appendChild(tile);
-    });
-
-    gridHost.appendChild(grid);
+    tile.addEventListener("click", () => openLightbox(flat, idx));
+    grid.appendChild(tile);
   });
+
+  gridHost.appendChild(grid);
+});
 
   setupLightbox(flat, encoded);
 }
