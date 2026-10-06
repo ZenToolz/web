@@ -17,6 +17,19 @@ function makeVideo(src, withControls) {
   return v;
 }
 
+// ---- Pause off-screen observer ----
+const tileObserver = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    const v = entry.target.querySelector("video");
+    if (!v) continue;
+    if (entry.isIntersecting) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  }
+}, { rootMargin: "200px 0px", threshold: 0.01 });
+
 // filename -> caption: strip extension + "P# - " prefix
 function displayName(name) {
   return name
@@ -75,7 +88,7 @@ async function buildFolder() {
   heading.className = "page-heading";
   if (p > 0) {
     const pageIdx = realPages.indexOf(p) + 1;
-    heading.textContent = `──── Page ${pageIdx} / ${totalPages} ────`;
+    heading.textContent = `──── ${label} - Page ${pageIdx} / ${totalPages} ────`;
   } else {
     heading.textContent = `──── Other ────`;
   }
@@ -98,6 +111,7 @@ async function buildFolder() {
 
     tile.addEventListener("click", () => openLightbox(flat, idx));
     grid.appendChild(tile);
+    tileObserver.observe(tile);
   });
 
   gridHost.appendChild(grid);
