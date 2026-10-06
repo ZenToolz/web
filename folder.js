@@ -13,10 +13,6 @@ function makeVideo(src, withControls) {
   v.playsInline = true;
   v.setAttribute("muted", "");
   v.setAttribute("playsinline", "");
-  v.style.width = "100%";
-  v.style.height = "100%";
-  v.style.objectFit = "cover";
-  v.style.display = "block";
   if (!withControls) v.preload = "none";
   return v;
 }
@@ -101,30 +97,23 @@ async function buildFolder() {
     const grid = document.createElement("div");
     grid.className = "tile-grid";
 
-    groupFiles.forEach(file => {
-      const idx = flat.length;
-      flat.push(file);
+  groupFiles.forEach(file => {
+    const idx = flat.length;
+    flat.push(file);
 
-      const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
-      const tile = document.createElement("div");
-      tile.className = "tile";
+    const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.appendChild(makeVideo(src));
 
-      const vbox = document.createElement("div");
-      vbox.style.position = "relative";
-      vbox.style.width = "100%";
-      vbox.style.paddingBottom = "75%";
-      vbox.style.background = "#000";
-      vbox.appendChild(makeVideo(src));
-      tile.appendChild(vbox);
+    const cap = document.createElement("div");
+    cap.className = "caption";
+    cap.textContent = displayName(file);
+    tile.appendChild(cap);
 
-      const cap = document.createElement("div");
-      cap.className = "caption";
-      cap.textContent = displayName(file);
-      tile.appendChild(cap);
-
-      tile.addEventListener("click", () => openLightbox(flat, idx));
-      grid.appendChild(tile);
-    });
+    tile.addEventListener("click", () => openLightbox(flat, idx));
+    grid.appendChild(tile);
+  });
 
     group.appendChild(grid);
     gridHost.appendChild(group);
