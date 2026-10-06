@@ -66,9 +66,6 @@ async function buildFolder() {
   const realPages = sortedPages.filter(p => p > 0);
   const totalPages = realPages.length;
 
-  document.getElementById("folder-sub").textContent =
-    totalPages ? `${totalPages} menu page${totalPages === 1 ? "" : "s"}` : "";
-
   const gridHost = document.getElementById("grid");
   gridHost.innerHTML = "";
 
