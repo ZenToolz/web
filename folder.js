@@ -17,19 +17,6 @@ function makeVideo(src, withControls) {
   return v;
 }
 
-// ---- Pause off-screen observer ----
-const tileObserver = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    const v = entry.target.querySelector("video");
-    if (!v) continue;
-    if (entry.isIntersecting) {
-      v.play().catch(() => {});
-    } else {
-      v.pause();
-    }
-  }
-}, { rootMargin: "200px 0px", threshold: 0.01 });
-
 // filename -> caption: strip extension + "P# - " prefix
 function displayName(name) {
   return name
@@ -43,6 +30,19 @@ function pageNumber(name) {
   return m ? parseInt(m[1], 10) : 0;
 }
 
+// ---- Pause off-screen observer ----
+const tileObserver = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    const v = entry.target.querySelector("video");
+    if (!v) continue;
+    if (entry.isIntersecting) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  }
+}, { rootMargin: "200px 0px", threshold: 0.01 });
+
 async function buildFolder() {
   const folder = window.FOLDER;
   const label = window.FOLDER_LABEL || folder;
@@ -54,7 +54,7 @@ async function buildFolder() {
   const res = await fetch(`${VIDEO_BASE}/${encoded}/list.json`);
   if (res.ok) files = await res.json();
 
-  // group files by P# (preserve order of appearance within each group)
+  // group files by P#
   const groups = new Map();
   for (const f of files) {
     const p = pageNumber(f);
@@ -62,7 +62,6 @@ async function buildFolder() {
     groups.get(p).push(f);
   }
 
-  // sorted page numbers, only positive ones count as real "pages"
   const sortedPages = [...groups.keys()].sort((a, b) => a - b);
   const realPages = sortedPages.filter(p => p > 0);
   const totalPages = realPages.length;
@@ -73,51 +72,57 @@ async function buildFolder() {
   const gridHost = document.getElementById("grid");
   gridHost.innerHTML = "";
 
-  // flat list for lightbox order
   const flat = [];
 
   sortedPages.forEach(p => {
-  const groupFiles = groups.get(p);
+    const groupFiles = groups.get(p);
 
-  // ---- one grid that holds the heading + all tiles ----
-  const grid = document.createElement("div");
-  grid.className = "tile-grid";
+    // one wrapper per page group
+    const group = document.createElement("section");
+    group.className = "page-group";
 
-  // heading (spans all columns)
-  const heading = document.createElement("h2");
-  heading.className = "page-heading";
-  if (p > 0) {
-    const pageIdx = realPages.indexOf(p) + 1;
-    heading.textContent = `──── ${label} - Page ${pageIdx} / ${totalPages} ────`;
-  } else {
-    heading.textContent = `──── Other ────`;
-  }
-  grid.appendChild(heading);
+    // heading (sibling of the grid, NOT inside it)
+    const heading = document.createElement("h2");
+    heading.className = "page-heading";
 
-  // tiles
-  groupFiles.forEach(file => {
-    const idx = flat.length;
-    flat.push(file);
+    if (p > 0) {
+      const pageIdx = realPages.indexOf(p) + 1;
+      heading.textContent = "---- " + label + " - Page " + pageIdx + " / " + totalPages + " ----";
+    } else {
+      heading.textContent = "---- " + label + " - Other ----";
+    }
+    group.appendChild(heading);
 
-    const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
-    const tile = document.createElement("div");
-    tile.className = "tile";
-    tile.appendChild(makeVideo(src));
+    // the 3-column tile grid
+    const grid = document.createElement("div");
+    grid.className = "tile-grid";
 
-    const cap = document.createElement("div");
-    cap.className = "caption";
-    cap.textContent = displayName(file);
-    tile.appendChild(cap);
+    groupFiles.forEach(file => {
+      const idx = flat.length;
+      flat.push(file);
 
-    tile.addEventListener("click", () => openLightbox(flat, idx));
-    grid.appendChild(tile);
-    tileObserver.observe(tile);
+      const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.appendChild(makeVideo(src));
+
+      const cap = document.createElement("div");
+      cap.className = "caption";
+      cap.textContent = displayName(file);
+      tile.appendChild(cap);
+
+      tile.addEventListener("click", () => openLightbox(flat, idx));
+      grid.appendChild(tile);
+    });
+
+    group.appendChild(grid);
+    gridHost.appendChild(group);
   });
 
-  gridHost.appendChild(grid);
-});
-
   setupLightbox(flat, encoded);
+
+  // register all tiles with the observer
+  document.querySelectorAll(".tile").forEach(t => tileObserver.observe(t));
 }
 
 // ---------- Lightbox ----------
@@ -142,8 +147,8 @@ function setupLightbox(files, encoded) {
   });
 
   lbPlayBtn.addEventListener("click", () => {
-    if (lbVideo.paused) { lbVideo.play(); lbPlayBtn.textContent = "❚❚"; }
-    else { lbVideo.pause(); lbPlayBtn.textContent = "▶"; }
+    if (lbVideo.paused) { lbVideo.play(); lbPlayBtn.textContent = "||"; }
+    else { lbVideo.pause(); lbPlayBtn.textContent = ">"; }
   });
 
   document.addEventListener("keydown", e => {
@@ -180,7 +185,7 @@ function loadCurrent() {
   lbVideo.muted = true;
   lbVideo.loop = true;
   lbVideo.play().catch(() => {});
-  lbPlayBtn.textContent = "❚❚";
+  lbPlayBtn.textContent = "||";
   lbCaption.textContent = displayName(file);
 }
 
