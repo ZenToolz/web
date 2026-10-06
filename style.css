@@ -50,14 +50,15 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 100%;
-  max-width: 600px;
-  aspect-ratio: 970 / 270;   /* ← replace with your image's real ratio */
-  height: auto;
+  display: block;
+  width: 80vw !important;
+  max-width: 600px !important;
+  min-width: 200px;
+  aspect-ratio: 1200 / 300 !important;
+  height: auto !important;
   font-size: 0;
   margin: 0 auto 30px;
 }
-
 .back-link {
   display: inline-flex;
   align-items: center;
