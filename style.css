@@ -45,6 +45,16 @@ body {
   margin-bottom: 26px;
 }
 
+.menu-title {
+  background-image: url("images/weblogo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 140px;      /* match your image's aspect ratio */
+  font-size: 0;       /* hides any leftover text */
+  margin-bottom: 30px;
+}
+
 .back-link {
   display: inline-flex;
   align-items: center;
