@@ -50,9 +50,11 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  height: 140px;      /* match your image's aspect ratio */
-  font-size: 0;       /* hides any leftover text */
-  margin-bottom: 30px;
+  width: 100%;
+  max-width: 600px;
+  height: 140px;
+  font-size: 0;
+  margin: 0 auto 30px;
 }
 
 .back-link {
