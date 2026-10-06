@@ -50,9 +50,10 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
-  height: 140px;
+  aspect-ratio: 970 / 270;   /* ← replace with your image's real ratio */
+  height: auto;
   font-size: 0;
   margin: 0 auto 30px;
 }
