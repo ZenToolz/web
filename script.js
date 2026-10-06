@@ -1,25 +1,26 @@
-// ---- Your folders, in display order ----
-// HUDTextures excluded. Display label can differ from folder name.
+// ---- Folder list ----
+// folder = folder name on disk (inside /videos/)
+// label  = display name shown on the cover
+// page   = html file to link to
 const FOLDERS = [
-  { folder: "ARMS",         label: "ARMS" },
-  { folder: "BODY",         label: "BODY" },
-  { folder: "BOS-CAM",      label: "BOS-CAM" },
-  { folder: "COUPLE",       label: "COUPLE" },
-  { folder: "F + F",        label: "F + F" },
-  { folder: "FT-TL",        label: "FT-TL" },
-  { folder: "HEAD",         label: "HEAD" },
-  { folder: "LEGS",         label: "LEGS" },
-  { folder: "M + F",        label: "M + F" },
-  { folder: "PIN",          label: "PIN" },
-  { folder: "POWER",        label: "POWER" },
-  { folder: "ROPE-POST",    label: "ROPE-POST" },
-  { folder: "ST-FN",        label: "ST-FN" },
-  { folder: "SUB",          label: "SUB" }
+  { folder: "ARMS",      label: "ARMS",      page: "arms.html" },
+  { folder: "BODY",      label: "BODY",      page: "body.html" },
+  { folder: "BOS-CAM",   label: "BOS-CAM",   page: "bos-cam.html" },
+  { folder: "COUPLE",    label: "COUPLE",    page: "couple.html" },
+  { folder: "F + F",     label: "F + F",     page: "f-f.html" },
+  { folder: "FT-TL",     label: "FT-TL",     page: "ft-tl.html" },
+  { folder: "HEAD",      label: "HEAD",      page: "head.html" },
+  { folder: "LEGS",      label: "LEGS",      page: "legs.html" },
+  { folder: "M + F",     label: "M + F",     page: "m-f.html" },
+  { folder: "PIN",       label: "PIN",       page: "pin.html" },
+  { folder: "POWER",     label: "POWER",     page: "power.html" },
+  { folder: "ROPE-POST", label: "ROPE-POST", page: "rope-post.html" },
+  { folder: "ST-FN",     label: "ST/FN",     page: "st-fn.html" },
+  { folder: "SUB",       label: "SUB",       page: "sub.html" }
 ];
 
 const VIDEO_BASE = "videos";
 
-// ---- Build a video element (Gyazo style) ----
 function makeVideo(src) {
   const v = document.createElement("video");
   v.src = src;
@@ -30,35 +31,27 @@ function makeVideo(src) {
   v.setAttribute("muted", "");
   v.setAttribute("playsinline", "");
   v.preload = "none";
-  v.loading = "lazy";
   return v;
 }
 
-// ---- Load each folder's list.json, build menu + sections ----
-async function build() {
+async function buildMenu() {
   const menuEl = document.getElementById("menu");
-  const sectionsEl = document.getElementById("sections");
 
-  for (const { folder, label } of FOLDERS) {
+  for (const { folder, label, page } of FOLDERS) {
     const encoded = encodeURIComponent(folder);
     let files = [];
-
     try {
       const res = await fetch(`${VIDEO_BASE}/${encoded}/list.json`);
       if (res.ok) files = await res.json();
-    } catch (e) {
-      console.warn("Missing list.json for", folder);
-      continue;
-    }
-
+    } catch (e) { /* skip */ }
     if (!files.length) continue;
 
     const firstSrc = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(files[0])}`;
 
-    // ----- Menu cover -----
-    const cover = document.createElement("div");
+    const cover = document.createElement("a");
     cover.className = "menu-cover";
-    cover.dataset.target = "sec-" + encoded;
+    cover.href = page;
+
     cover.appendChild(makeVideo(firstSrc));
 
     const lbl = document.createElement("div");
@@ -66,44 +59,8 @@ async function build() {
     lbl.textContent = label;
     cover.appendChild(lbl);
 
-    cover.addEventListener("click", () => {
-      const target = document.getElementById("sec-" + encoded);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
     menuEl.appendChild(cover);
-
-    // ----- Section -----
-    const section = document.createElement("section");
-    section.className = "section";
-    section.id = "sec-" + encoded;
-
-    const h2 = document.createElement("h2");
-    h2.className = "section-title";
-    h2.textContent = label;
-    section.appendChild(h2);
-
-    const grid = document.createElement("div");
-    grid.className = "tile-grid";
-
-    for (const file of files) {
-      const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
-
-      const tile = document.createElement("div");
-      tile.className = "tile";
-      tile.appendChild(makeVideo(src));
-
-      const cap = document.createElement("div");
-      cap.className = "caption";
-      cap.textContent = file.replace(/\.[^.]+$/, ""); // filename without extension
-      tile.appendChild(cap);
-
-      grid.appendChild(tile);
-    }
-
-    section.appendChild(grid);
-    sectionsEl.appendChild(section);
   }
 }
 
-build();
+buildMenu();
