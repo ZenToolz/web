@@ -19,15 +19,44 @@ body {
 }
 
 .page-heading {
-  font-size: 2.0rem;
-  font-weight: 750;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: #ccc;
-  margin: 0 0 10px;
+  margin: 0;                 /* was: 6px 0 10px — now handled by the row */
   letter-spacing: 0.12em;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.page-heading-row {
+  position: relative;
+  text-align: center;
+  margin: 0 0 10px;
+  min-height: 40px;
+}
+
+.page-back {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  display: block;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+
+.page-back:hover {
+  opacity: 1;
+}
+
+.page-back img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .site-title {

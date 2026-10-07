@@ -76,7 +76,20 @@ async function buildFolder() {
     const group = document.createElement("section");
     group.className = "page-group";
 
-    // heading (sibling of the grid, NOT inside it)
+    // ---- heading row: back button + heading ----
+    const headingRow = document.createElement("div");
+    headingRow.className = "page-heading-row";
+
+    const backBtn = document.createElement("a");
+    backBtn.className = "page-back";
+    backBtn.href = "index.html";
+    backBtn.setAttribute("aria-label", "Back to menu");
+
+    const backImg = document.createElement("img");
+    backImg.src = "images/back.png";
+    backImg.alt = "Back";
+    backBtn.appendChild(backImg);
+
     const heading = document.createElement("h2");
     heading.className = "page-heading";
 
@@ -86,7 +99,10 @@ async function buildFolder() {
     } else {
       heading.textContent = "---- " + label + " - Other ----";
     }
-    group.appendChild(heading);
+
+    headingRow.appendChild(backBtn);
+    headingRow.appendChild(heading);
+    group.appendChild(headingRow);
 
     // the 3-column tile grid
     const grid = document.createElement("div");
