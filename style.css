@@ -63,7 +63,7 @@ body.folder-page {
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 90px;
+  width: 100px;
   padding: 0;
   text-decoration: none;
   z-index: 5;
@@ -77,7 +77,7 @@ body.folder-page {
 
 .folder-banner {
   display: block;
-  margin: 0 auto 4px;
+  margin: 0 auto 0;
   width: 100%;
   max-width: 260px;        /* smaller so caption 3 isn't cut off */
   height: auto;
