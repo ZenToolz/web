@@ -83,11 +83,11 @@ async function buildFolder() {
     const backBtn = document.createElement("a");
     backBtn.className = "page-back";
     backBtn.href = "index.html";
-    backBtn.setAttribute("aria-label", "Back to menu");
+    backBtn.setAttribute("aria-label", "Home");
 
     const backImg = document.createElement("img");
-    backImg.src = "images/back.png";
-    backImg.alt = "Back";
+    backImg.src = "images/home.png";
+    backImg.alt = "Home";
     backBtn.appendChild(backImg);
 
     const heading = document.createElement("h2");
