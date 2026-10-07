@@ -53,17 +53,34 @@ body {
   margin: 0 auto 30px;
 }
 
-.back-link {
-  display: inline-block;
-  color: #aaa;
-  text-decoration: none;
-  font-size: 0.85rem;
-  margin-bottom: 8px;   /* was 18px */
+/* Top row: back button (left) + banner (centered in page) */
+body.folder-page {
+  position: relative;
 }
 
-.back-link:hover {
-  background: #2a2a2a;
-  color: #fff;
+.back-link {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90px;             /* back button size */
+  padding: 0;
+  text-decoration: none;
+  z-index: 5;
+}
+
+.back-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.folder-banner {
+  display: block;
+  margin: 0 auto 22px;
+  width: 100%;
+  max-width: 260px;        /* smaller so caption 3 isn't cut off */
+  height: auto;
 }
 
 /* ---------- Menu covers ---------- */
@@ -95,14 +112,6 @@ body {
 .menu-cover img {
   display: block;
   width: 100%;
-  height: auto;
-}
-
-.folder-banner {
-  display: block;
-  margin: 0 auto 22px;
-  width: 100%;
-  max-width: 320px;
   height: auto;
 }
 
