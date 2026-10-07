@@ -7,11 +7,11 @@ const FOLDERS = [
   { folder: "BODY",      label: "BODY",      page: "body.html" },
   { folder: "BOS-CAM",   label: "BOS-CAM",   page: "bos-cam.html" },
   { folder: "COUPLE",    label: "COUPLE",    page: "couple.html" },
-  { folder: "F + F",     label: "F + F",     page: "f-f.html" },
+  { folder: "F-F",       label: "F-F",       page: "f-f.html" },
   { folder: "FT-TL",     label: "FT-TL",     page: "ft-tl.html" },
   { folder: "HEAD",      label: "HEAD",      page: "head.html" },
   { folder: "LEGS",      label: "LEGS",      page: "legs.html" },
-  { folder: "M + F",     label: "M + F",     page: "m-f.html" },
+  { folder: "M-F",       label: "M-F",       page: "m-f.html" },
   { folder: "PIN",       label: "PIN",       page: "pin.html" },
   { folder: "POWER",     label: "POWER",     page: "power.html" },
   { folder: "ROPE-POST", label: "ROPE-POST", page: "rope-post.html" },
@@ -19,7 +19,7 @@ const FOLDERS = [
   { folder: "SUB",       label: "SUB",       page: "sub.html" }
 ];
 
-const VIDEO_BASE = "videos";
+/*const VIDEO_BASE = "videos";
 
 function makeVideo(src) {
   const v = document.createElement("video");
@@ -32,32 +32,25 @@ function makeVideo(src) {
   v.setAttribute("playsinline", "");
   v.preload = "none";
   return v;
-}
+}*/
+
+const MENU_IMAGE_BASE = "images/menu";
 
 async function buildMenu() {
   const menuEl = document.getElementById("menu");
 
   for (const { folder, label, page } of FOLDERS) {
     const encoded = encodeURIComponent(folder);
-    let files = [];
-    try {
-      const res = await fetch(`${VIDEO_BASE}/${encoded}/list.json`);
-      if (res.ok) files = await res.json();
-    } catch (e) { /* skip */ }
-    if (!files.length) continue;
-
-    const firstSrc = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(files[0])}`;
+    const imgSrc = `${MENU_IMAGE_BASE}/${encoded}.png`;
 
     const cover = document.createElement("a");
     cover.className = "menu-cover";
     cover.href = page;
 
-    cover.appendChild(makeVideo(firstSrc));
-
-    const lbl = document.createElement("div");
-    lbl.className = "label";
-    lbl.textContent = label;
-    cover.appendChild(lbl);
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = label;
+    cover.appendChild(img);
 
     menuEl.appendChild(cover);
   }
