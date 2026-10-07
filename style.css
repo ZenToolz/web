@@ -192,8 +192,8 @@ body {
   text-align: center;
   word-break: break-word;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 4px rgba(0,0,0,0.9);
-  background: #111;
+  /*text-shadow: 0 0 4px rgba(0,0,0,0.9);
+  background: #111;*/
 }
 
 /* ---------- Lightbox ---------- */
