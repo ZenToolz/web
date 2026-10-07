@@ -1,0 +1,24 @@
+
+{
+    "pages" :
+    [
+        ["AbsSTRETCH", "AbsX", "AbsFLOOR", 
+        "AbsELBOW", "AbsESC", "AbsTICKLE", 
+        "AbsBOOB", "AbsKNEEL", "AbsXX"],
+        ["TitSTOMP", "TitSMOTHER", "JapFLOOR", 
+        "TitSIT", "TitBITE", "JapESC", 
+        "TitTWIST", "JapCHOKE", "Dungeon"],
+        ["CeilingST", "CeilingROCK", "CeilingNECK", 
+        "CeilingX", "Ceiling", "CeilKNEEL", 
+        "CeilingESC", "CeilingESC2", "CeilDRAGON"],
+        ["STF", "WidowFL", "WedLOCK", 
+        "STF ESC", "WidowTAP", "WedSUB", 
+        "BlckWIDOW", "BowARROW", "BowESC"],
+        ["Octopus", "OcroX", "ScorpiST", 
+        "OctELBOW", "OctoESC", "ScorpLIFT", 
+        "OctBOOB", "PusCRUSH", "ScorpDROP"],
+        ["ThighSPLIT", "ThSPTBk", "SpiderLOCK", 
+        "ThSplitX", "ThSplitBkX", "SpiderHIT", 
+        "ThighESC", "ThSplBkESC", "SpiderESC"]
+    ]
+}
