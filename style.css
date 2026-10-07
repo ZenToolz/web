@@ -75,14 +75,6 @@ body.folder-page {
   height: auto;
 }
 
-.folder-banner {
-  display: block;
-  margin: 0 auto 0;
-  width: 100%;
-  max-width: 260px;        /* smaller so caption 3 isn't cut off */
-  height: auto;
-}
-
 /* ---------- Menu covers ---------- */
 .menu-grid {
   max-width: 1000px;

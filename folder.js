@@ -48,15 +48,6 @@ async function buildFolder() {
   const label = window.FOLDER_LABEL || folder;
   const encoded = encodeURIComponent(folder);
 
-  const titleEl = document.getElementById("folder-title");
-  titleEl.textContent = ""; // clear any old text
-
-  const banner = document.createElement("img");
-  banner.className = "folder-banner";
-  banner.src = `images/menu/${encodeURIComponent(folder)}.png`;
-  banner.alt = label;
-  titleEl.appendChild(banner);
-
   let files = [];
   const res = await fetch(`${VIDEO_BASE}/${encoded}/list.json`);
   if (res.ok) files = await res.json();
