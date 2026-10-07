@@ -42,7 +42,7 @@ const tileObserver = new IntersectionObserver((entries) => {
     }
   }
 }, { rootMargin: "200px 0px", threshold: 0.01 });
-
+/*
 async function buildFolder() {
   const folder = window.FOLDER;
   const label = window.FOLDER_LABEL || folder;
@@ -134,8 +134,77 @@ async function buildFolder() {
 
   // register all tiles with the observer
   document.querySelectorAll(".tile").forEach(t => tileObserver.observe(t));
-}
+}*/
+async function buildFolder() {
+  const folder = window.FOLDER;
+  const label = window.FOLDER_LABEL || folder;
+  const encoded = encodeURIComponent(folder);
 
+  let data = { pages: [] };
+  const res = await fetch(`${VIDEO_BASE}/${encoded}/list.json`);
+  if (res.ok) data = await res.json();
+
+  const pages = data.pages || [];
+  const totalPages = pages.length;
+
+  const gridHost = document.getElementById("grid");
+  gridHost.innerHTML = "";
+
+  const flat = []; // for lightbox navigation
+
+  pages.forEach((pageFiles, index) => {
+    const pageIdx = index + 1;
+
+    // ---- heading row with home button ----
+    const headingRow = document.createElement("div");
+    headingRow.className = "page-heading-row";
+
+    const homeBtn = document.createElement("a");
+    homeBtn.className = "page-back";
+    homeBtn.href = "index.html";
+    homeBtn.setAttribute("aria-label", "Home");
+
+    const homeImg = document.createElement("img");
+    homeImg.src = "images/home.png";
+    homeImg.alt = "Home";
+    homeBtn.appendChild(homeImg);
+
+    const heading = document.createElement("h2");
+    heading.className = "page-heading";
+    heading.textContent = "---- " + label + " - Page " + pageIdx + " / " + totalPages + " ----";
+
+    headingRow.appendChild(homeBtn);
+    headingRow.appendChild(heading);
+    gridHost.appendChild(headingRow);
+
+    // ---- tile grid ----
+    const grid = document.createElement("div");
+    grid.className = "tile-grid";
+
+    pageFiles.forEach(file => {
+      const idx = flat.length;
+      flat.push(file);
+
+      const src = `${VIDEO_BASE}/${encoded}/${encodeURIComponent(file)}`;
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.appendChild(makeVideo(src));
+
+      const cap = document.createElement("div");
+      cap.className = "caption";
+      cap.textContent = displayName(file);
+      tile.appendChild(cap);
+
+      tile.addEventListener("click", () => openLightbox(flat, idx));
+      grid.appendChild(tile);
+    });
+
+    gridHost.appendChild(grid);
+  });
+
+  setupLightbox(flat, encoded);
+  document.querySelectorAll(".tile").forEach(t => tileObserver.observe(t));
+}
 // ---------- Lightbox ----------
 let lbFiles = [], lbIndex = 0, lbEncoded = "";
 let lbEl, lbVideo, lbCaption, lbPlayBtn;
