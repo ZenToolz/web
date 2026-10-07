@@ -42,7 +42,7 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 80px;
+  width: 90px;
   display: block;
   text-decoration: none;
   opacity: 0.85;
@@ -57,15 +57,6 @@ body {
   display: block;
   width: 100%;
   height: auto;
-}
-
-.site-title {
-  font-size: 3.0rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  margin-bottom: 26px;
-  text-align: center;
-  color: #fff;
 }
 
 .folder-sub {
@@ -85,23 +76,6 @@ body {
 /* Top row: back button (left) + banner (centered in page) */
 body.folder-page {
   position: relative;
-}
-
-.back-link {
-  display: block;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 100px;
-  padding: 0;
-  text-decoration: none;
-  z-index: 5;
-}
-
-.back-img {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 /* ---------- Menu covers ---------- */
