@@ -300,9 +300,10 @@ body {
 
 .lb-play {
   background: rgba(255,255,255,0.1);
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.4);
   color: #fff;
   font-size: 2.0rem;
+  font-weight: 700;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
