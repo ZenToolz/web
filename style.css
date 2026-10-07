@@ -4,7 +4,7 @@ body {
   background: #111;
   color: #eee;
   font-family: system-ui, -apple-system, sans-serif;
-  padding: 20px;
+  padding: 10px 20px;
   min-height: 100vh;
 }
 
@@ -54,18 +54,11 @@ body {
 }
 
 .back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 6px;
-  color: #ddd;
+  display: inline-block;
+  color: #aaa;
   text-decoration: none;
   font-size: 0.85rem;
-  margin-bottom: 18px;
-  transition: background 0.15s ease;
+  margin-bottom: 8px;   /* was 18px */
 }
 
 .back-link:hover {
@@ -109,7 +102,7 @@ body {
   display: block;
   margin: 0 auto 22px;
   width: 100%;
-  max-width: 500px;
+  max-width: 320px;
   height: auto;
 }
 
