@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEAD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="folder-page">
+
+  <div id="grid"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <div class="lb-inner">
+      <button id="lb-close" class="lb-close" aria-label="Close">✕</button>
+      <button id="lb-prev" class="lb-arrow lb-prev" aria-label="Previous">‹</button>
+      <video id="lb-video" playsinline muted loop></video>
+      <button id="lb-next" class="lb-arrow lb-next" aria-label="Next">›</button>
+      <div class="lb-footer">
+        <button id="lb-play" class="lb-play" aria-label="Play/Pause">❚❚</button>
+        <span id="lb-caption" class="lb-caption"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.FOLDER = "HEAD";
+    window.FOLDER_LABEL = "HEAD";
+  </script>
+  <script src="folder.js"></script>
+</body>
+</html>
