@@ -105,6 +105,14 @@ body {
   height: auto;
 }
 
+.folder-banner {
+  display: block;
+  margin: 0 auto 22px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
 @media (max-width: 600px) {
   .menu-title { font-size: 1.5rem; }
 }
