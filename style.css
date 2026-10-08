@@ -87,7 +87,7 @@ body.folder-page {
 .menu-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px 124px; /* was 16px;*/
+  gap: 24px 8px; /* was 16px;*/
   margin-bottom: 16px;
 }
 
