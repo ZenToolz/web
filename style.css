@@ -67,7 +67,7 @@ body {
 
 .menu-logo {
   display: block;
-  width: 80vw;
+  width: 90vw;
   max-width: 1000px;
   height: auto;
   margin: 0 auto 30px;
@@ -87,7 +87,7 @@ body.folder-page {
 .menu-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px 8px; /* was 16px;*/
+  gap: 32px 8px; /* was 16px;*/
   margin-bottom: 16px;
 }
 
